@@ -1,19 +1,29 @@
 from selenium import webdriver #sirve para controlar el navegador
-from selenium.webdriver.common.by import By     #sirve para localizar elementos en la página
-# OBLIGATORIO para tu versión 4.35.0:
-from selenium.webdriver.chrome.service import Service as ChromeService  #sirve para iniciar el servicio del driver
-from webdriver_manager.chrome import ChromeDriverManager   #sirve para gestionar la instalación del driver
-# IMPORTANTE: Instalar la librería webdriver-manager con pip install webdriver-manager
-import time #sirve para hacer pausas
+from selenium.webdriver.common.by import By      #sirve para localizar elementos en la página
+from selenium.webdriver.chrome.service import Service as ChromeService  #sierve para gestionar el servicio del driver de Chrome
+from webdriver_manager.chrome import ChromeDriverManager    #sirve para gestionar la instalación del driver de Chrome
+import time  #sirve para hacer pausas en la ejecución
+from selenium.webdriver.chrome.options import Options  #sirve para configurar opciones del navegador Chrome
 
+# 1. Crear el objeto de Opciones
+chrome_options = Options()
+
+# 2. Configurar el modo sin cabeza (headless): 
+# Le dice a Chrome que se ejecute sin interfaz gráfica, necesario en CI.
+chrome_options.add_argument("--headless")
+
+# 3. Configurar la opción de seguridad:
+# NECESARIO para que el driver funcione con versiones recientes de Chrome en CI.
+chrome_options.add_argument("--remote-allow-origins=*") 
 
 
 print("--- INICIANDO PRUEBA ---")
-
-# 1. INICIALIZACIÓN: Arrancar el navegador
-# La línea que usa webdriver-manager para encontrar el driver:
 print("Paso 1: Configurando el Driver y abriendo Chrome...")
-driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+# 4. Pasar el objeto de opciones al inicializar el driver
+driver = webdriver.Chrome(
+    service=ChromeService(ChromeDriverManager().install()),
+    options=chrome_options # <--- PARÁMETRO AÑADIDO
+)
 
 # 2. NAVEGACIÓN: Ir a la URL
 driver.get("https://www.google.com")
