@@ -1,23 +1,17 @@
 name: Ejecutar Pruebas de Automatización CI
-
 on:
   push:
     branches: [ main ]
-
 jobs:
   pruebas_selenium:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
-    
     - name: Configurar Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.x'
-
     - name: Instalar Dependencias (Selenium 4.35.0 y Driver Manager)
       run: pip install selenium webdriver-manager pytest
-
     - name: Ejecutar Pruebas
       run: pytest
