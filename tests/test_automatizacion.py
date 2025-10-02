@@ -4,7 +4,6 @@ from selenium.webdriver.chrome.service import Service as ChromeService #sierve p
 from webdriver_manager.chrome import ChromeDriverManager #sirve para gestionar la instalación del driver de Chrome
 import time  #sirve para hacer pausas en la ejecución
 from selenium.webdriver.chrome.options import Options  #sirve para configurar opciones del navegador Chrome
-#ultimo ajuste para ci
 # 1. Crear el objeto de Opciones
 chrome_options = Options()
 
@@ -44,3 +43,5 @@ time.sleep(3)
 # 6. CIERRE: Cerrar el navegador y terminar la sesión
 driver.quit()
 print("Paso 6: Automatización terminada. ¡Exitoso!")
+
+# FIN DEL ARCHIVO - Agrega este comentario y guarda. <--- Aquí está el cambio
