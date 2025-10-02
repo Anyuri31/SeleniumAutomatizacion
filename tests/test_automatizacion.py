@@ -1,7 +1,7 @@
 from selenium import webdriver #sirve para controlar el navegador
-from selenium.webdriver.common.by import By      #sirve para localizar elementos en la página
+from selenium.webdriver.common.by import By  #sirve para localizar elementos en la página
 from selenium.webdriver.chrome.service import Service as ChromeService  #sierve para gestionar el servicio del driver de Chrome
-from webdriver_manager.chrome import ChromeDriverManager    #sirve para gestionar la instalación del driver de Chrome
+from webdriver_manager.chrome import ChromeDriverManager #sirve para gestionar la instalación del driver de Chrome
 import time  #sirve para hacer pausas en la ejecución
 from selenium.webdriver.chrome.options import Options  #sirve para configurar opciones del navegador Chrome
 
