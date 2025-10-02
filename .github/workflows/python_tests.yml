@@ -13,5 +13,9 @@ jobs:
         python-version: '3.x'
     - name: Instalar Dependencias (Selenium 4.35.0 y Driver Manager)
       run: pip install selenium webdriver-manager pytest
+    - name: Limpiar el Cache de Python y archivos temporales
+      run: |
+        find . -type d -name "__pycache__" -exec rm -r {} +
+        find . -type d -name "pruebas_temp" -exec rm -r {} +
     - name: Ejecutar Pruebas
       run: pytest
