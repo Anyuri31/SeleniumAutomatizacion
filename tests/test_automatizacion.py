@@ -45,3 +45,4 @@ driver.quit()
 print("Paso 6: Automatización terminada. ¡Exitoso!")
 
 # FIN DEL ARCHIVO - Agrega este comentario y guarda. <--- Aquí está el cambio
+# Esto es un cambio trivial para forzar el CI
