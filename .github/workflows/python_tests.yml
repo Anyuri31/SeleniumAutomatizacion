@@ -17,5 +17,9 @@ jobs:
       run: |
         find . -type d -name "__pycache__" -exec rm -r {} +
         find . -type d -name "pruebas_temp" -exec rm -r {} +
+    - name: Listar archivos para depuración
+      run: |
+        pwd  # Muestra el directorio actual
+        ls -R  # Muestra todos los archivos y subdirectorios de forma recursiva
     - name: Ejecutar Pruebas
-      run: pytest
+      run: pytest tests/
