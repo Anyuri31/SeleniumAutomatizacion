@@ -15,9 +15,8 @@ chrome_options.add_argument("--headless")
 # NECESARIO para que el driver funcione con versiones recientes de Chrome en CI.
 chrome_options.add_argument("--remote-allow-origins=*") 
 
-
-print("--- INICIANDO PRUEBA ---")
-print("Paso 1: Configurando el Driver y abriendo Chrome...")
+def test_busqueda_en_google():
+    print("Paso 1: Configurando el Driver y abriendo Chrome...")
 # 4. Pasar el objeto de opciones al inicializar el driver
 driver = webdriver.Chrome(
     service=ChromeService(ChromeDriverManager().install()),

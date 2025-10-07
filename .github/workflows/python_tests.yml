@@ -22,4 +22,5 @@ jobs:
         pwd  # Muestra el directorio actual
         ls -R  # Muestra todos los archivos y subdirectorios de forma recursiva
     - name: Ejecutar Pruebas
-      run: pytest tests/
+      run: |
+        python -m pytest tests/
