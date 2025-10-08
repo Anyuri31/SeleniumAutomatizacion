@@ -1,29 +1,44 @@
-#sirve para tener las configuraciones globales de pytest y no usarlas en cada test de prueba
+# conftest.py (Va DENTRO de la carpeta 'tests/')
+#Este archivo contiene todas las librerías necesarias para inicializar y gestionar el navegador. No tendrás que repetir estas importaciones en tus archivos de prueba.
+
 import pytest
+# Selenium WebDriver: La librería principal para controlar el navegador
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-# ... (Importaciones necesarias para el driver, como webdriver_manager) ...
+# By: Necesario para definir los localizadores (By.ID, By.NAME, etc.)
+from selenium.webdriver.common.by import By 
+# ChromeService: Necesario para gestionar el servicio del driver de Chrome
+from selenium.webdriver.chrome.service import Service as ChromeService 
+# Options: Necesario para configurar el modo headless, seguridad, etc.
+from selenium.webdriver.chrome.options import Options 
+# WebDriverManager: Necesario para descargar y gestionar automáticamente el driver
+from webdriver_manager.chrome import ChromeDriverManager 
+# Time (Opcional): Lo dejo por si necesitas pausas manuales para debugging, aunque no es buena práctica.
+import time 
 
-# === A. DEFINICIÓN DE LA FIXTURE DEL DRIVER ===
+# === DEFINICIÓN DE LA FIXTURE DEL DRIVER ===
 
-@pytest.fixture(scope="module") # <--- @FIXTURE: Marca esta función como un recurso. 'module' significa ejecutar una vez por archivo.
+@pytest.fixture(scope="module") 
 def driver_setup():
-    """Fixture: Prepara el driver de Chrome antes de la prueba y lo cierra después."""
+    """Fixture: Configura, inicializa y cierra el driver de Chrome para las pruebas."""
     
-    # --- Configuración (Tu código de opciones Headless) ---
+    # --- Configuración del Driver ---
     chrome_options = Options()
+    # 1. Modo Headless (Imprescindible en servidores CI)
     chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--remote-allow-origins=*")
+    # 2. Opción de Seguridad (Necesario para versiones recientes de Chrome)
+    chrome_options.add_argument("--remote-allow-origins=*") 
     
     # --- Inicialización ---
-    # AQUÍ VA: Tu código para inicializar el driver (webdriver.Chrome(...))
-    driver = webdriver.Chrome(options=chrome_options) 
+    # 1. Instala el driver si es necesario y obtiene el servicio
+    service = ChromeService(ChromeDriverManager().install())
+    # 2. Inicia el navegador con el servicio y las opciones
+    driver = webdriver.Chrome(service=service, options=chrome_options) 
     
-    # Buena práctica: Sincronización implícita para cargas rápidas
+    # Buena Práctica: Espera Implícita (para manejar cargas rápidas)
     driver.implicitly_wait(5) 
     
-    # --- Pausa / Devolución ---
-    yield driver  # <--- YIELD: Pausa la función, envía el 'driver' abierto a la prueba.
+    # --- Devolución y Pausa ---
+    yield driver  # Pytest devuelve el 'driver' abierto y pausa aquí
     
-    # --- Limpieza (Se ejecuta después de la prueba) ---
-    driver.quit() # <--- AQUÍ VA: El cierre limpio del navegador.
+    # --- Limpieza (Se ejecuta automáticamente al finalizar la prueba) ---
+    driver.quit() # Cierra el navegador y la sesión del driver
